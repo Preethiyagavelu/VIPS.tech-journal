@@ -1,0 +1,137 @@
+// filepath: /media/suryaah/OS/surya project/VIPs intern/VIPS journal/details.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Details | Research Portal</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/css/bootstrap-overrides.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+</head>
+<body>
+  <header class="bg-primary py-2">
+    <div class="container d-flex justify-content-between align-items-center">
+      <a href="index.html" class="text-white text-decoration-none h4 mb-0"><i class="bi bi-journal-code me-2"></i>ResearchPortal</a>
+      <div class="d-flex align-items-center gap-2">
+        <button class="btn btn-outline-light btn-sm" id="themeToggle"><i class="bi bi-moon"></i></button>
+        <a href="saved.html" class="btn btn-accent btn-sm"><i class="bi bi-bookmark"></i> Saved <span class="badge rounded-pill bg-dark text-light ms-1" id="savedCount">0</span></a>
+      </div>
+    </div>
+  </header>
+
+  <main class="py-5 bg-page">
+    <div class="container">
+      <div id="detailRoot" class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="card border-0 shadow-sm">
+            <img id="dImage" src="" class="card-img-top" alt="">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <div><span class="badge bg-primary" id="dYear"></span> <span class="badge bg-secondary" id="dType"></span></div>
+                <button class="btn btn-sm btn-outline-secondary" id="dSave"><i class="bi bi-bookmark"></i> Save</button>
+              </div>
+              <h1 class="h3" id="dTitle"></h1>
+              <p class="text-muted" id="dAuthors"></p>
+              <p id="dAbstract"></p>
+              <div id="dKeywords" class="d-flex flex-wrap gap-2 mt-2"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+ <!-- Footer -->
+    <footer class="site-footer">
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-6 col-md-3">
+            <h5 class="footer-heading">Platform</h5>
+            <ul class="list-unstyled footer-links">
+              <li><a href="about.html">About</a></li>
+              <li><a href="contact.html">Contact</a></li>
+              <li><a href="#">Roadmap</a></li>
+              <li><a href="#">Release Notes</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-md-3">
+            <h5 class="footer-heading">Resources</h5>
+            <ul class="list-unstyled footer-links">
+              <li><a href="#">Journals</a></li>
+              <li><a href="#">Conferences</a></li>
+              <li><a href="#">Books</a></li>
+              <li><a href="#">Collections</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-md-3">
+            <h5 class="footer-heading">Support</h5>
+            <ul class="list-unstyled footer-links">
+              <li><a href="#">Help Center</a></li>
+              <li><a href="#">API Docs</a></li>
+              <li><a href="#">Accessibility</a></li>
+              <li><a href="#">Status</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-md-3">
+            <h5 class="footer-heading">Stay Updated</h5>
+            <form class="mb-3">
+              <div class="input-group">
+                <input type="email" required class="form-control newsletter-input" placeholder="Email">
+                <button class="btn btn-primary btn-sm" type="submit">Join</button>
+              </div>
+            </form>
+            <div class="social">
+              <a href="#"><i class="bi bi-linkedin"></i></a>
+              <a href="#"><i class="bi bi-twitter"></i></a>
+              <a href="#"><i class="bi bi-github"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom mt-4">
+          <div>© 2025 ResearchPortal. All rights reserved.</div>
+          <div class="legal-links">
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+            <a href="#">Licensing</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(location.search);
+      const id = Number(params.get('id'));
+      const all = window.getAllResearchData ? window.getAllResearchData() : [];
+      const item = all.find(x => x.id === id);
+      if (!item) return;
+      document.getElementById('dImage').src = item.image;
+      document.getElementById('dImage').alt = item.title;
+      document.getElementById('dYear').textContent = item.year;
+      document.getElementById('dType').textContent = item.type;
+      document.getElementById('dTitle').textContent = item.title;
+      document.getElementById('dAuthors').textContent = item.authors;
+      document.getElementById('dAbstract').textContent = item.abstract;
+      document.getElementById('dKeywords').innerHTML = item.keywords.map(k=>`<span class="badge bg-light text-dark border">${k}</span>`).join('');
+      const saveBtn = document.getElementById('dSave');
+      const saved = new Set(JSON.parse(localStorage.getItem("savedItems") || "[]"));
+      const sync = () => {
+        const i = saveBtn.querySelector('i');
+        if (i) i.className = 'bi ' + (saved.has(id) ? 'bi-bookmark-fill' : 'bi-bookmark');
+        saveBtn.classList.toggle('btn-primary', saved.has(id));
+        saveBtn.classList.toggle('btn-outline-secondary', !saved.has(id));
+      };
+      sync();
+      saveBtn.addEventListener('click', () => {
+        if (saved.has(id)) saved.delete(id); else saved.add(id);
+        localStorage.setItem("savedItems", JSON.stringify([...saved]));
+        const chip = document.getElementById("savedCount"); if (chip) chip.textContent = saved.size;
+        sync();
+      });
+      const chip = document.getElementById("savedCount"); if (chip) chip.textContent = saved.size;
+    });
+  </script>
+</body>
+</html>
