@@ -1,0 +1,397 @@
+:root {
+  --primary: #006d6a;
+  --accent: #ffb400;
+  --accent-dark: #004f4d;
+  --surface: #ffffff;
+  --muted: #4a5568;
+  --page-bg: #f6f8fa;
+}
+
+/* Base */
+body {
+  background: var(--page-bg);
+  color: #0f172a;
+}
+.bg-primary { background-color: var(--primary) !important; }
+.btn-primary { background-color: var(--primary); border-color: var(--primary); }
+.btn-primary:hover { background-color: var(--accent-dark); border-color: var(--accent-dark); }
+.btn-accent { background-color: var(--accent); border-color: var(--accent); color: #000; }
+.btn-accent:hover { background-color: #e6a200; border-color: #e6a200; }
+.bg-page { background-color: var(--page-bg); }
+.text-muted { color: var(--muted) !important; }
+.badge.bg-secondary { background-color: var(--muted) !important; }
+.card { background-color: var(--surface); border-radius: 8px; transition: transform .2s ease, box-shadow .2s ease; }
+.card:hover { transform: translateY(-2px); box-shadow: 0 10px 18px rgba(0,0,0,0.08); }
+.bg-light { background-color: #eef2f6 !important; }
+.card-img-top { object-fit: cover; height: 240px; }
+
+/* Header and navbar layering */
+header { position: sticky; top: 0; z-index: 1100; }
+.navbar .dropdown-menu, header .dropdown-menu { z-index: 1200; }
+
+/* Responsive nav */
+.main-nav { display: none; }
+@media (min-width: 992px) { .main-nav { display: block; } }
+@media (max-width: 991px) {
+  header .main-nav {
+    position: absolute; top: 100%; left: 0; right: 0;
+    background: var(--primary); padding: 1rem; display: none; z-index: 1140;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.15);
+  }
+  header .main-nav.show { display: block; }
+  header .main-nav .dropdown-menu { position: static; background: transparent; border: 0; box-shadow: none; }
+  header .main-nav .dropdown-item { color: #fff; }
+}
+
+/* Search container under dropdowns */
+#searchContainer { position: relative; z-index: 1; }
+
+/* Result header container polish */
+#resultsContainer > .col-12 {
+  background-color: white; padding: 0.75rem 1rem; border-radius: 0.375rem; margin-bottom: 1rem;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+/* Accent helper */
+.bg-accent { background-color: var(--accent) !important; color: #000; }
+
+/* Filter section styles */
+.btn-filter {
+  background-color: var(--page-bg); border: 1px solid #dee2e6;
+  padding: 0.5rem 1rem; font-weight: 500;
+}
+.btn-filter[aria-expanded="true"] .bi-chevron-down { transform: rotate(180deg); transition: transform 0.2s ease; }
+.filter-section { border-bottom: 1px solid #dee2e6; padding-bottom: 1rem; }
+.filter-section:last-child { border-bottom: none; padding-bottom: 0; }
+.form-check-label { font-size: 0.9rem; }
+.form-check { margin-bottom: 0.4rem; }
+.input-group-text { background-color: var(--page-bg); }
+
+/* Featured overlay (hero card) */
+.featured-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,.55), rgba(0,0,0,.15));
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 1.25rem; border-radius: 0 0 .5rem .5rem;
+}
+.featured-overlay h2, .featured-overlay p { color: #fff; }
+
+/* Badges and chips */
+.badge.bg-light.text-dark.border {
+  background-color: #f7f8fa !important; border-color: #e5e7eb !important; color: #0f172a !important;
+}
+
+/* Footer (professional, IEEE-like) */
+.site-footer {
+  background: #0d1117; color: #c9d1d9; padding-top: 3rem; margin-top: 3rem; border-top: 1px solid #1f2937;
+}
+.site-footer .footer-heading {
+  font-size: .9rem; text-transform: uppercase; letter-spacing: .05em; font-weight: 600; color: #ffffff; margin-bottom: 1rem;
+}
+.site-footer a { color: #8dbbff; text-decoration: none; font-size: .85rem; }
+.site-footer a:hover { color: #fff; text-decoration: underline; }
+.site-footer .footer-links li { margin-bottom: .4rem; }
+.site-footer .newsletter-input { background:#1e293b; border:1px solid #334155; color:#e2e8f0; }
+.site-footer .social a {
+  display:inline-flex; width:32px; height:32px; align-items:center; justify-content:center;
+  border-radius:6px; background:#1e293b; color:#8dbbff; margin-right:6px; font-size:1.1rem;
+}
+.site-footer .social a:hover { background:#2563eb; color:#fff; }
+.footer-bottom {
+  border-top:1px solid #1f2937; margin-top:2rem; padding-top:1rem; font-size:.75rem;
+  display:flex; flex-wrap:wrap; justify-content:space-between; gap:.75rem;
+}
+.footer-bottom .legal-links a { margin-right:1rem; color:#94a3b8; }
+.footer-bottom .legal-links a:hover { color:#fff; }
+
+/* Dark mode */
+:root { color-scheme: light dark; }
+body.dark {
+  --rp-bg-light: #0b1220;
+  --rp-text-dark: #f1f5f9;
+  --rp-primary: #00a3a0;
+  --rp-accent: #ffd166;
+  /* Ensure all helpers using --page-bg switch to dark */
+  --page-bg: #0b1220;
+  --surface: #0f172a;
+  background: var(--rp-bg-light);
+  color: var(--rp-text-dark);
+  color-scheme: dark;
+}
+
+/* Make the document background follow the variable */
+html, body {
+  background-color: var(--page-bg);
+}
+
+/* Sections that use .bg-page should be dark in dark mode */
+body.dark .bg-page {
+  background-color: var(--page-bg) !important;
+}
+
+/* Normalize common light utilities when theme is dark */
+body.dark .bg-white { background-color: var(--surface) !important; }
+body.dark .text-dark { color: #e5e7eb !important; }
+
+/* Keep cards on dark surface */
+body.dark .card { background-color: var(--surface); }
+
+/* Footer already themed, keep explicit background just in case */
+body.dark .site-footer { background-color: #050a12; }
+
+body.dark a { color: var(--rp-accent); }
+body.dark a:hover,
+body.dark a:focus { color: #ffe9a7; text-decoration: underline; }
+body.dark header.bg-primary { background: var(--rp-primary) !important; }
+body.dark .main-nav.show { background: var(--rp-primary); }
+body.dark .dropdown-menu {
+  background: #121c2c;
+  border: 1px solid #1f2d40;
+}
+body.dark .dropdown-item { color: #e2e8f0; }
+body.dark .dropdown-item:hover { background: #1e293b; color: #fff; }
+body.dark .card {
+  background: #111a27;
+  border: 1px solid #1f2d40;
+  color: #dbe2ea;
+}
+body.dark .card .card-title,
+body.dark .card h5,
+body.dark .card h4 { color: #f1f5f9; }
+body.dark .card-text { color: #cbd5e1; }
+body.dark .badge.bg-light,
+body.dark .badge.bg-light.text-dark {
+  background: #1e293b !important;
+  color: #e2e8f0 !important;
+  border: 1px solid #334155;
+}
+body.dark .badge.bg-secondary { background: #334155 !important; }
+body.dark .badge.bg-primary { background: var(--rp-primary) !important; }
+body.dark .btn-outline-light { color: #f1f5f9; border-color: #475569; }
+body.dark .btn-outline-light:hover { background: #1e293b; }
+body.dark .btn-outline-secondary { color: #f1f5f9; border-color: #475569; }
+body.dark .btn-outline-secondary:hover { background: #1e293b; }
+body.dark .btn-primary { background: var(--rp-primary); border-color: var(--rp-primary); }
+body.dark .btn-primary:hover { background: #008681; }
+body.dark .btn-accent { background: var(--rp-accent); color: #222; }
+body.dark .form-control,
+body.dark .form-select,
+body.dark textarea {
+  background: #1e293b;
+  border: 1px solid #334155;
+  color: #e2e8f0;
+}
+body.dark .form-control:focus,
+body.dark .form-select:focus,
+body.dark textarea:focus {
+  border-color: var(--rp-primary);
+  box-shadow: 0 0 0 0.15rem rgba(0,163,160,.35);
+}
+body.dark .form-control::placeholder,
+body.dark textarea::placeholder { color: #64748b; }
+body.dark .input-group-text { background: #1e293b; border-color: #334155; color: #cbd5e1; }
+body.dark table { color: #e2e8f0; }
+body.dark thead { background: #1e293b; }
+body.dark tbody tr { border-color: #1f2d40; }
+body.dark tbody tr:hover { background: #1e293b; }
+body.dark .nav-tabs { border-color: #1f2d40; }
+body.dark .nav-tabs .nav-link {
+  color: #cbd5e1;
+  background: transparent;
+  border: 1px solid transparent;
+}
+body.dark .nav-tabs .nav-link.active {
+  color: #f8fafc;
+  background: #1e293b;
+  border-color: #334155 #334155 #1e293b;
+}
+body.dark .pagination .page-link {
+  background: #1e293b;
+  border-color: #334155;
+  color: #e2e8f0;
+}
+body.dark .pagination .page-item.active .page-link {
+  background: var(--rp-primary);
+  border-color: var(--rp-primary);
+  color: #fff;
+}
+body.dark .pagination .page-link:hover { background: #223246; }
+body.dark .site-footer {
+  background: #050a12;
+  border-top: 1px solid #162032;
+  color: #c9d1d9;
+}
+body.dark .site-footer a { color: #6fb4ff; }
+body.dark .site-footer a:hover { color: #fff; }
+body.dark .footer-heading { color: #f1f5f9; }
+body.dark .footer-bottom { border-color: #162032; }
+body.dark .modal-content {
+  background: #0f172a;
+  color: #e2e8f0;
+  border: 1px solid #1f2d40;
+}
+body.dark .modal-header,
+body.dark .modal-footer { border-color: #1f2d40; }
+body.dark .accordion-item {
+  background: #111a27;
+  border: 1px solid #1f2d40;
+}
+body.dark .accordion-button {
+  background: #111a27;
+  color: #e2e8f0;
+}
+body.dark .accordion-button:not(.collapsed) {
+  background: #1e293b;
+  color: #fff;
+  box-shadow: inset 0 -1px 0 #1f2d40;
+}
+body.dark .accordion-button::after { filter: invert(1); }
+
+/* --- Dark mode refinements for Saved nav, Support Directory, Refine Results --- */
+body.dark .support-directory-table thead th,
+body.dark .support-directory-table thead {
+  background:#1e293b;
+  color:#f1f5f9 !important;
+  border-color:#334155 !important;
+}
+body.dark .support-directory-table tbody td,
+body.dark .support-directory-table tbody th {
+  color:#dbe2ea;
+}
+
+body.dark .refine-panel {
+  background:#111a27 !important;
+  color:#e2e8f0;
+  border:1px solid #1f2d40;
+}
+body.dark .refine-panel h5,
+body.dark .refine-panel .h5,
+body.dark .refine-panel .form-label { color:#f1f5f9; }
+body.dark .refine-panel .text-muted { color:#94a3b8 !important; }
+body.dark .refine-panel .form-select,
+body.dark .refine-panel .form-control {
+  background:#1e293b;
+  border:1px solid #334155;
+  color:#e2e8f0;
+}
+body.dark .refine-panel .form-select:focus,
+body.dark .refine-panel .form-control:focus {
+  border-color: var(--rp-primary);
+  box-shadow:0 0 0 .15rem rgba(0,163,160,.35);
+}
+body.dark .refine-panel .form-select option { background:#1e293b; color:#e2e8f0; }
+body.dark .refine-panel .form-check-label { color:#e2e8f0; }
+body.dark .refine-panel .form-check-input { background:#1e293b; border-color:#334155; }
+body.dark .refine-panel hr { border-color:#1f2d40; }
+
+body.dark header .h4, body.dark header a.text-white { color:#f1f5f9 !important; }
+
+/* ---- Dark mode remaining light patches ---- */
+
+/* Generic light background strips (e.g. search section) */
+body.dark .bg-light,
+body.dark section.bg-light,
+body.dark .py-4.bg-light {
+  background-color: #08111d !important;
+}
+
+/* Search bar wrapper (adjust if your wrapper has a different id/class) */
+body.dark #searchContainer,
+body.dark .search-bar-wrapper {
+  background-color: #111a27;
+  border: 1px solid #1f2d40;
+  box-shadow: 0 0 0 1px rgba(31,45,64,.3);
+}
+
+/* Inputs inside search bar */
+body.dark #searchContainer .form-control,
+body.dark .search-bar-wrapper .form-control {
+  background-color: #1e293b;
+  color: #e2e8f0;
+  border-color: #334155;
+}
+
+/* Result header block (Showing X of Y ...) */
+body.dark #resultsContainer > .col-12 {
+  background-color: #111a27;
+  border: 1px solid #1f2d40;
+  box-shadow: none;
+  color: #e2e8f0;
+}
+body.dark #resultsContainer > .col-12 .text-muted { color:#94a3b8 !important; }
+
+/* Tables (directory on contact page) */
+body.dark table.table {
+  background-color: #111a27;
+  color: #e2e8f0;
+  border-color: #1f2d40;
+}
+body.dark table.table thead th {
+  background-color: #1e293b;
+  border-color: #334155 !important;
+  color: #f1f5f9;
+}
+body.dark table.table tbody td,
+body.dark table.table tbody th {
+  background-color: #111a27;
+  border-color: #1f2d40;
+}
+body.dark table.table tbody tr:hover td,
+body.dark table.table tbody tr:hover th {
+  background-color: #1e293b;
+}
+
+/* Nav tabs background line fix */
+body.dark .nav-tabs {
+  border-color:#1f2d40;
+}
+body.dark .nav-tabs .nav-link {
+  background: #111a27;
+  border-color:#1f2d40;
+  color:#cbd5e1;
+}
+body.dark .nav-tabs .nav-link.active {
+  background:#1e293b;
+  border-color:#334155 #334155 #1e293b;
+  color:#f8fafc;
+}
+
+/* Any badge or chip still showing white */
+body.dark .badge.bg-white,
+body.dark .chip.bg-white {
+  background:#1e293b !important;
+  color:#e2e8f0 !important;
+  border:1px solid #334155 !important;
+}
+
+/* Override stray pure white backgrounds */
+body.dark .white-bg,
+body.dark .bg-white,
+body.dark [style*="background-color: #fff"],
+body.dark [style*="background:#fff"] {
+  background-color:#0f172a !important;
+  color:#e2e8f0 !important;
+}
+
+/* Ensure cards do not revert to prior override */
+body.dark .card {
+  background:#111a27;
+  border:1px solid #1f2d40;
+  color:#dbe2ea;
+}
+
+/* Buttons inside dark strips */
+body.dark #searchContainer .btn,
+body.dark .search-bar-wrapper .btn {
+  box-shadow:none;
+}
+
+/* Focus ring contrast */
+body.dark :focus-visible {
+  outline:2px solid var(--rp-accent);
+}
+
+/* Smooth transition when toggling theme */
+html, body, .card, .site-footer, header, #searchContainer, .bg-page {
+  transition: background-color .25s, color .25s, border-color .25s;
+}
